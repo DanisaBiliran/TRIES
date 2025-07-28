@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnS Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+:root{
+    --primary: white;
+    --second: #2D336B;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-areas: 
+        "nav logs"
+        "main logs";
+    grid-template-columns: 1fr 396px;
+    grid-template-rows: auto 1fr;
+
+    font-family: "DM Sans", sans-serif;
+    background: linear-gradient(133deg, #F7F7F7 13.25%, #A9B5DF 205.83%);
+}
+
+nav, main, aside,
+.rooms-div{
+    background-color: transparent;
+}
+
+nav{
+    grid-area: nav;
+    min-height: 50px;
+    height: 68px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 clamp(20px, 5vw, 65px);
+}
+
+/* "Dashboard" */
+nav h1{
+    font-weight: 400;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+/* hour and date */
+nav div{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+nav div p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* ================================ */
+main{
+    grid-area: main;
+
+    padding: 0 clamp(20px, 4vw, 45px);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    overflow-x: auto;
+}
+
+main .rooms-div,
+main .stats-div{
+    /* border: 1px solid green; */
+}
+
+/* ROOMS */
+/* div containing rooms */
+main .rooms-div{
+    min-height: fit-content;
+    height: 35%;
+    padding: 0 clamp(20px, 4vw, 50px) 20px clamp(20px, 5vw, 60px);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+/* all rooms */
+main .rooms{
+    border-radius: 25.683px;
+    background-color: white;
+    box-shadow: 0 20.547px 20.547px 0 rgba(0, 0, 0, 0.10);
+    width: 100%;
+    max-width: 280px;
+    min-width: 200px;
+    height: 150px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+/* logo of room */
+main .rooms i {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: white;
+    background-color: var(--second);
+
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+    padding: clamp(15px, 3vw, 20px) clamp(18px, 3.5vw, 25px);
+}
+
+/* texts */
+main .rooms .texts{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    text-align: center;
+}
+
+main .rooms .texts h2,
+main .rooms .texts p{
+    margin: 0;
+}
+
+/* room name */
+main .rooms .texts h2{
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+/* rename option */
+main .rooms .texts p{
+    opacity: 0.3;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
+
+/* STATISTICS */
+/* div of statistics */
+main .stats-div{
+    min-height: fit-content;
+    height: 57%;
+
+    display: grid;
+    grid-template-areas: 
+        "recent top"
+        "monthly top";
+    grid-template-columns: 1fr 500px;
+    grid-template-rows: auto 1fr;
+
+    gap: 25px 35px;
+}
+
+/* all stats */
+main .stats-div .stats{
+    border-radius: 18px;
+    background-color: white;
+    box-shadow: 0 20.547px 20.547px 0 rgba(0, 0, 0, 0.10);
+    min-height: 120px;
+}
+
+/* most recent alarm */
+main .stats-div .recent{
+    grid-area: recent;
+    min-height: fit-content;
+    height: 135px;
+}
+
+/* alarms detected monthly */
+main .stats-div .monthly{
+    grid-area: monthly;
+}
+
+/* top alarm count */
+main .stats-div .top{
+    grid-area: top;
+}
+
+/* ================================ */
+
+aside{
+    grid-area: logs;
+    background-color: var(--primary);
+
+    padding: 0 clamp(15px, 3vw, 30px);
+}
+
+/* room num, edit button */
+aside header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 0;
+    border-bottom: 2px solid rgba(224, 224, 224, 0.685);
+}
+
+/* room num */
+aside header h2{
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+/* edit button */
+aside header i {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    opacity: .3;
+}
+
+/* TABLE */
+/* div of table */
+aside .table-div{
+    width: 100%;
+
+    text-align: left;
+    overflow-x: auto;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+}
+
+/* table */
+aside .table-div table {
+    min-width: auto;
+    width: 100%;
+
+    border-collapse: collapse;
+    background: white;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+/* "view history" */
+aside .title{
+    text-align: left;
+    font-weight: 600;
+    opacity: .5;
+
+    margin-left: 10px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* table header */
+aside table th{
+    background-color: rgba(136, 143, 167, 0.42);
+    padding: 5px 10px;
+    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+}
+
+aside table td{
+    padding: 5px 10px;
+    font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+}
+
+aside .table-div table tr:nth-child(odd) {
+    background-color: rgba(136, 143, 167, 0.10);
+}
+
+/* ================================ */
+/* RESPONSIVE BREAKPOINTS */
+/* ================================ */
+
+/* Large tablets and small desktops */
+@media screen and (max-width: 1200px) {
+    body {
+        grid-template-columns: 1fr 320px;
+    }
+
+    main {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        overflow-y: auto;
+    }
+
+    aside{
+        height: 100vh;
+        position: sticky;
+        right: 0;
+        top: 0;
+    }
+
+    /* all rooms */
+    main .rooms{
+        border-radius: 25.683px;
+        max-width: 280px;
+        min-width: 100px;
+    }
+
+    /* logo of room */
+    main .rooms i {
+        font-size: 2rem;
+    }
+    
+    main .stats-div {
+        grid-template-columns: 1fr 300px;
+        gap: 20px 25px;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 970px) {
+    main .stats-div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    main .stats-div .stats{
+        min-height: 200px;
+        height: fit-content;
+    }
+}
+
+@media screen and (max-width: 920px) {
+    main .rooms-div{
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+
+/* Small tablets and large phones */
+@media screen and (max-width: 768px) {
+    body {
+        grid-template-areas: 
+            "nav"
+            "main"
+            "logs";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+    
+    main {
+        padding: 40px;
+    }
+
+    main .stats-div{
+        border-top: 2px solid rgba(224, 224, 224, 0.685);
+        padding-top: 10px;
+    }
+
+    /* most recent alarm */
+    main .stats-div .recent{
+        grid-area: recent;
+        min-height: fit-content;
+        height: 120px;
+    }
+
+    /* alarms detected monthly */
+    main .stats-div .monthly{
+        grid-area: monthly;
+    }
+
+    /* top alarm count */
+    main .stats-div .top{
+        grid-area: top;
+    }
+    
+    aside {
+        max-height: 400px;
+        overflow-y: auto;
+        border-top: 2px solid rgba(224, 224, 224, 0.685);
+    }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 480px) {
+    main .rooms-div{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px 15px;
+    }
+
+    main .rooms {
+        height: 120px;
+        /* padding: 20px; */
+        max-width: 80%;
+        width: 150px;
+    }
+    
+    aside {
+        padding: 0 15px;
+        max-height: 350px;
+    }
+    
+    aside .table-div table {
+        font-size: 0.8rem;
+    }
+    
+    aside table th,
+    aside table td {
+        padding: 8px 6px;
+    }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 400px) {
+    main {
+        gap: 20px;
+    }
+
+    main .rooms {
+        height: 120px;
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 320px) {
+    main{
+        padding: 40px 30px;
+    }
+    aside {
+        padding: 0 10px;
+    }
+    
+    aside table th,
+    aside table td {
+        padding: 6px 4px;
+        font-size: 0.7rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Dashboard</h1>
+
+        <div>
+            <p>00/00/00</p>
+            <p>00:00 AM</p>
+        </div>
+    </nav>
+
+    <main>
+        <div class="rooms-div">
+            <div class="room1 rooms">
+                <i class="fa-solid fa-bell"></i>
+
+                <div class="texts">
+                    <h2>Room 1</h2>
+                    <p>rename</p>
+                </div>
+            </div>
+
+            <div class="room2 rooms">
+                <i class="fa-solid fa-bell"></i>
+
+                <div class="texts">
+                    <h2>Room 2</h2>
+                    <p>rename</p>
+                </div>
+            </div>
+
+            <div class="room3 rooms">
+                <i class="fa-solid fa-bell"></i>
+
+                <div class="texts">
+                    <h2>Room 3</h2>
+                    <p>rename</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-div">
+            <div class="recent stats"></div>
+            <div class="monthly stats"></div>
+            <div class="top stats"></div>
+        </div>
+    </main>
+
+    <aside>
+        <header>
+            <h2>Room #</h2>
+            <i class="fa-solid fa-pen-to-square"></i>
+        </header>
+        
+        <p class="title">View History</p>
+
+        <div class="table-div">
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+
+                <tr>
+                    <td>Alarm reset</td>
+                    <td>00/00/00</td>
+                    <td>00:00 AM</td>
+                </tr>
+
+                <tr>
+                    <td>Alarm detected</td>
+                    <td>00/00/00</td>
+                    <td>00:00 AM</td>
+                </tr>
+            </table>
+        </div>
+    </aside>
+</body>
+</html>

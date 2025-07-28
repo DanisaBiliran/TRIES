@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+:root{
+    --primary: white;
+    --second: #2D336B;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-areas: 
+        "nav logs"
+        "main logs";
+    grid-template-columns: auto 396px;
+    grid-template-rows: auto 1fr;
+
+    font-family: "DM Sans", sans-serif;
+    background: linear-gradient(133deg, #F7F7F7 13.25%, #A9B5DF 205.83%);
+}
+
+nav, main, aside,
+.rooms-div{
+    background-color: transparent;
+}
+
+nav{
+    grid-area: nav;
+    /* border: 1px solid red; */
+    min-height: 50px;
+    height: 68px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 65px;
+}
+
+/* "Dashboard" */
+nav h1{
+    /* border: 1px solid black; */
+    font-weight: 400;
+    font-size: 2rem;
+
+    /* font-size: 49.166px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal; */
+}
+
+/* hour and date */
+nav div{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+/* ================================ */
+main{
+    grid-area: main;
+    /* border: 1px solid black; */
+
+    padding: 0 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    overflow-x: auto;
+}
+
+main .rooms-div,
+main .stats-div{
+    /* border: 1px solid green; */
+}
+
+/* ROOMS */
+/* div containing rooms */
+main .rooms-div{
+    min-height: fit-content;
+    height: 35%;
+    padding: 0 50px 20px 60px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* all rooms */
+main .rooms{
+    /* border: 1px solid orange; */
+    border-radius: 25.683px;
+    background-color: white;
+    box-shadow: 0 20.547px 20.547px 0 rgba(0, 0, 0, 0.10);
+    width: 28%;
+    height: 75%;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+/* logo of room */
+main .rooms i {
+    font-size:  310%;
+    color: white;
+    background-color: var(--second);
+
+    position: absolute;
+    top: -40px;
+    left: 28%;
+
+    border-radius: 50%;
+    padding: 20px 25px;
+}
+
+/* texts */
+main .rooms .texts{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    text-align: center;
+}
+
+main .rooms .texts h2,
+main .rooms .texts p{
+    margin: 0;
+}
+
+/* room name */
+main .rooms .texts h2{
+    font-size: 1.5rem;
+}
+
+/* rename option */
+main .rooms .texts p{
+    opacity: 0.3;
+}
+
+
+/* STATISTICS */
+/* div of statistics */
+main .stats-div{
+    min-height: fit-content;
+    height: 57%;
+
+    display: grid;
+    grid-template-areas: 
+        "recent top"
+        "monthly top";
+    grid-template-columns: auto 500px;
+    grid-template-rows: auto 1fr;
+
+    gap: 25px 35px;
+}
+
+/* all stats */
+main .stats-div .stats{
+    /* border: 1px solid red; */
+    border-radius: 18px;
+    background-color: white;
+    box-shadow: 0 20.547px 20.547px 0 rgba(0, 0, 0, 0.10);
+}
+
+/* most recent alarm */
+main .stats-div .recent{
+    grid-area: recent;
+    min-height: fit-content;
+    height: 120px;
+}
+
+/* alarms detected monthly */
+main .stats-div .monthly{
+    grid-area: monthly;
+}
+
+/* top alarm count */
+main .stats-div .top{
+    grid-area: top;
+}
+
+/* ================================ */
+
+aside{
+    grid-area: logs;
+    background-color: var(--primary);
+
+    padding: 0 30px;
+}
+
+/* room num, edit button */
+aside header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 0;
+    border-bottom: 2px solid rgba(224, 224, 224, 0.685);
+}
+
+/* room num */
+aside header h2{
+    margin: 0;
+}
+
+/* edit button */
+aside header i {
+    font-size: 1.3rem;
+    opacity: .3;
+}
+
+/* TABLE */
+/* div of table */
+aside .table-div{
+    width: 100%;
+
+    text-align: left;
+    overflow-x: auto;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+}
+
+/* table */
+aside .table-div table {
+    min-width: auto;
+    width: 100%;
+
+    border-collapse: collapse;
+    background: white;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+/* "view history" */
+aside .title{
+    text-align: left;
+    font-weight: 600;
+    opacity: .5;
+
+    margin-left: 10px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+/* table header */
+aside table th{
+    background-color: rgba(136, 143, 167, 0.42);
+    padding: 5px 10px;
+}
+
+aside table td{
+    padding: 5px 10px;
+}
+
+aside .table-div table tr:nth-child(odd) {
+    background-color: rgba(136, 143, 167, 0.10);
+}
