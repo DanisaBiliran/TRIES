@@ -89,7 +89,7 @@ main .stats-div{
 main .rooms-div{
     min-height: fit-content;
     height: 35%;
-    padding: 0 clamp(20px, 4vw, 50px) 20px clamp(20px, 5vw, 60px);
+    padding: 10px 40px;
 
     display: flex;
     flex-direction: row;
@@ -103,9 +103,10 @@ main .rooms{
     border-radius: 25.683px;
     background-color: white;
     box-shadow: 0 20.547px 20.547px 0 rgba(0, 0, 0, 0.10);
-    width: 100%;
-    max-width: 280px;
-    min-width: 200px;
+    /* width: 100%; */
+    max-width: 50%;
+    width: 30%;
+    min-width: 25%;
     height: 150px;
     position: relative;
 
@@ -288,163 +289,37 @@ aside .table-div table tr:nth-child(odd) {
 
 /* Large tablets and small desktops */
 @media screen and (max-width: 1200px) {
-    body {
-        grid-template-columns: 1fr 320px;
-    }
-
-    main {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        overflow-y: auto;
-    }
-
-    aside{
-        height: 100vh;
-        position: sticky;
-        right: 0;
-        top: 0;
-    }
-
-    /* all rooms */
-    main .rooms{
-        border-radius: 25.683px;
-        max-width: 280px;
-        min-width: 100px;
-    }
-
-    /* logo of room */
-    main .rooms i {
-        font-size: 2rem;
-    }
     
-    main .stats-div {
-        grid-template-columns: 1fr 300px;
-        gap: 20px 25px;
-    }
 }
 
 /* Tablets */
 @media screen and (max-width: 970px) {
-    main .stats-div{
-        display: flex;
-        flex-direction: column;
-    }
-
-    main .stats-div .stats{
-        min-height: 200px;
-        height: fit-content;
-    }
+    
 }
 
 @media screen and (max-width: 920px) {
-    main .rooms-div{
-        padding-left: 0;
-        padding-right: 0;
-    }
+    
 }
 
 
 /* Small tablets and large phones */
 @media screen and (max-width: 768px) {
-    body {
-        grid-template-areas: 
-            "nav"
-            "main"
-            "logs";
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
-    }
     
-    main {
-        padding: 40px;
-    }
-
-    main .stats-div{
-        border-top: 2px solid rgba(224, 224, 224, 0.685);
-        padding-top: 10px;
-    }
-
-    /* most recent alarm */
-    main .stats-div .recent{
-        grid-area: recent;
-        min-height: fit-content;
-        height: 120px;
-    }
-
-    /* alarms detected monthly */
-    main .stats-div .monthly{
-        grid-area: monthly;
-    }
-
-    /* top alarm count */
-    main .stats-div .top{
-        grid-area: top;
-    }
-    
-    aside {
-        max-height: 400px;
-        overflow-y: auto;
-        border-top: 2px solid rgba(224, 224, 224, 0.685);
-    }
 }
 
 /* Mobile phones */
 @media screen and (max-width: 480px) {
-    main .rooms-div{
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 40px 15px;
-    }
-
-    main .rooms {
-        height: 120px;
-        /* padding: 20px; */
-        max-width: 80%;
-        width: 150px;
-    }
     
-    aside {
-        padding: 0 15px;
-        max-height: 350px;
-    }
-    
-    aside .table-div table {
-        font-size: 0.8rem;
-    }
-    
-    aside table th,
-    aside table td {
-        padding: 8px 6px;
-    }
 }
 
 /* Mobile phones */
 @media screen and (max-width: 400px) {
-    main {
-        gap: 20px;
-    }
-
-    main .rooms {
-        height: 120px;
-        min-width: 100%;
-        box-sizing: border-box;
-    }
+    
 }
 
 /* Very small screens */
 @media screen and (max-width: 320px) {
-    main{
-        padding: 40px 30px;
-    }
-    aside {
-        padding: 0 10px;
-    }
     
-    aside table th,
-    aside table td {
-        padding: 6px 4px;
-        font-size: 0.7rem;
-    }
 }
     </style>
 </head>
