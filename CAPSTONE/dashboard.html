@@ -207,6 +207,11 @@ aside{
     background-color: var(--primary);
 
     padding: 0 clamp(15px, 3vw, 30px);
+
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    right: 0;
 }
 
 /* room num, edit button */
@@ -289,16 +294,58 @@ aside .table-div table tr:nth-child(odd) {
 
 /* Large tablets and small desktops */
 @media screen and (max-width: 1200px) {
-    
+    body{
+        grid-template-columns: 1fr 350px;
+    }
+
+    main{
+        padding: 0 30px;
+        gap: 0;
+    }
+
+    main .rooms-div{
+        padding: 10px 10px;
+    }
+
+    main .rooms i{
+        font-size: 2.5rem;
+    }
+
+    main .stats-div{
+        grid-template-columns: 1fr 250px;
+    }
 }
 
 /* Tablets */
-@media screen and (max-width: 970px) {
-    
-}
+@media screen and (max-width: 900px) {
+    main .stats-div{
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "top"
+        "recent"
+        "monthly";
 
-@media screen and (max-width: 920px) {
-    
+    grid-template-rows: 250px 1fr 1fr;
+    }
+
+    main{
+        padding: 20px 30px;
+        gap: 20px;
+    }
+
+    main .rooms{
+        min-height: fit-content;
+        height: 130px;
+    }
+
+    main .rooms i{
+        font-size: clamp(1rem,2.2rem,2.2rem);
+    }
+
+    main .stats-div{
+        border-top: 2px solid rgba(184, 183, 183, 0.408);
+        padding-top: 10px;
+    }
 }
 
 
