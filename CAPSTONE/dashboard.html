@@ -334,8 +334,13 @@ aside .table-div table tr:nth-child(odd) {
     }
 
     main .rooms{
+        border-radius: 15px;
         min-height: fit-content;
         height: 130px;
+
+        min-width: fit-content;
+        width: 30%;
+        max-width: 30%;
     }
 
     main .rooms i{
@@ -345,6 +350,11 @@ aside .table-div table tr:nth-child(odd) {
     main .stats-div{
         border-top: 2px solid rgba(184, 183, 183, 0.408);
         padding-top: 10px;
+    }
+
+    /* room name */
+    main .rooms .texts h2{
+        font-size: clamp(.5rem, 2vw, 1rem);
     }
 }
 
@@ -411,9 +421,9 @@ aside .table-div table tr:nth-child(odd) {
         </div>
 
         <div class="stats-div">
-            <div class="recent stats"></div>
-            <div class="monthly stats"></div>
-            <div class="top stats"></div>
+            <div class="recent stats"> recent</div>
+            <div class="monthly stats"> monthly</div>
+            <div class="top stats"> top</div>
         </div>
     </main>
 
