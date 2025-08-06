@@ -154,6 +154,13 @@
             font-size: clamp(0.8rem, 2vw, 1rem);
         }
 
+        main .rooms .texts p:hover,
+        aside header i:hover{
+            opacity: 0.6;
+            cursor: pointer;
+            transition: .5s;
+        }
+
 
         /* STATISTICS */
         /* div of statistics */
@@ -512,7 +519,7 @@
 
                 <div class="texts">
                     <h2>Room 1</h2>
-                    <p>rename</p>
+                    <p onclick="renameRoom(this)">rename</p>
                 </div>
             </div>
 
@@ -521,7 +528,7 @@
 
                 <div class="texts">
                     <h2>Room 2</h2>
-                    <p>rename</p>
+                    <p onclick="renameRoom(this)">rename</p>
                 </div>
             </div>
 
@@ -530,7 +537,7 @@
 
                 <div class="texts">
                     <h2>Room 3</h2>
-                    <p>rename</p>
+                    <p onclick="renameRoom(this)">rename</p>
                 </div>
             </div>
         </div>
@@ -548,7 +555,7 @@
             <i class="fa-solid fa-pen-to-square"></i>
         </header>
         
-        <p class="title">View History</p>
+        <p class="title">Alert History</p>
 
         <div class="table-div">
             <table>
@@ -572,5 +579,21 @@
             </table>
         </div>
     </aside>
+
+    <script>
+        function renameRoom(renameElement) {
+            // get room name
+            const roomNameElement = renameElement.previousElementSibling;
+            const currentName = roomNameElement.textContent;
+            
+            // Prompt user for new room name
+            const newName = prompt(`Rename ${currentName}:`, currentName);
+            
+            // If user didn't cancel and entered a name, update it
+            if (newName !== null && newName.trim() !== '') {
+                roomNameElement.textContent = newName.trim();
+            }
+        }
+    </script>
 </body>
 </html>
