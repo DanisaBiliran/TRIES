@@ -299,8 +299,8 @@ aside .table-div table tr:nth-child(odd) {
     }
 
     main{
-        padding: 0 30px;
-        gap: 0;
+        padding: 20px 30px;
+        gap: 25px;
     }
 
     main .rooms-div{
@@ -318,6 +318,10 @@ aside .table-div table tr:nth-child(odd) {
 
 /* Tablets */
 @media screen and (max-width: 900px) {
+    body{
+        grid-template-columns: 1fr 300px;
+    }
+
     main .stats-div{
     grid-template-columns: 1fr;
     grid-template-areas: 
@@ -336,7 +340,7 @@ aside .table-div table tr:nth-child(odd) {
     main .rooms{
         border-radius: 15px;
         min-height: fit-content;
-        height: 130px;
+        height: 120px;
 
         min-width: fit-content;
         width: 30%;
@@ -344,7 +348,7 @@ aside .table-div table tr:nth-child(odd) {
     }
 
     main .rooms i{
-        font-size: clamp(1rem,2.2rem,2.2rem);
+        font-size: clamp(1rem,2rem,2rem);
     }
 
     main .stats-div{
@@ -356,23 +360,146 @@ aside .table-div table tr:nth-child(odd) {
     main .rooms .texts h2{
         font-size: clamp(.5rem, 2vw, 1rem);
     }
+
+    /* rename option */
+    main .rooms .texts p{
+        opacity: 0.3;
+        font-size: clamp(0.5rem, 1.5vw, 1rem);
+    }
+
+    /* "view history" */
+    aside .title{
+        font-size: clamp(0.7rem, 1.7vw, 1rem);
+    }
+
+    aside table th,
+    aside table td {
+        font-size: clamp(0.65rem, 1.3vw, 0.7rem);
+    }
 }
 
 
 /* Small tablets and large phones */
 @media screen and (max-width: 768px) {
-    
+    aside{
+        display: none;
+    }
+
+    body{
+        grid-template-areas: 
+        "nav"
+        "main";
+
+        grid-template-columns: 1fr;
+    }
+
+    main{
+        padding: 20px clamp(3.5vw, 4vw, 5vw);
+    }
+
+    main .stats-div{
+        min-height: fit-content;
+        height: 57%;
+
+        display: grid;
+        grid-template-areas: 
+            "recent top"
+            "monthly top";
+        grid-template-columns: 1fr 50vw;
+        grid-template-rows: auto 1fr;
+
+        gap: clamp(15px, 20px, 30px);
+    }
+
+    main .rooms{
+        padding: 25px 15px;
+        min-height: fit-content;
+    }
+
+    /* room name */
+    main .rooms .texts h2{
+        font-size: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    /* rename option */
+    main .rooms .texts p{
+        opacity: 0.3;
+        font-size: clamp(0.5rem, 2vw, 1rem);
+    }
 }
 
 /* Mobile phones */
-@media screen and (max-width: 480px) {
-    
+@media screen and (max-width: 375px) {
+    nav{
+        padding: 0 clamp(3.5vw, 4vw, 5vw);
+
+        min-height: fit-content;
+        height: 40px;
+    }
+
+    nav h1{
+        margin: 0;
+    }
+
+    .time{
+        display: none;
+    }
+
+    main{
+        padding: 10px clamp(3.5vw, 4vw, 5vw);
+    }
+
+    /* ROOMS */
+    /* div containing rooms */
+    main .rooms-div{
+        min-height: fit-content;
+        height: 35%;
+        padding: 10px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 20.547px 20.547px 0 rgba(0, 0, 0, 0.10);
+    }
+
+    /* all rooms */
+    main .rooms{
+        /* border: 1px solid black; */
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+        max-width: 50%;
+        width: 30%;
+        min-width: 25%;
+        height: 100px;
+        padding: 5px;
+    }
+
+    /* logo of room */
+    main .rooms i {
+        font-size: clamp(2rem, 3vw, 3rem);
+        top: 10px;
+        left: 50%;
+
+        padding: clamp(10px, 2.5vw, 15px) clamp(13px, 3vw, 20px);
+    }
+
+    main .stats-div{
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "top"
+        "recent"
+        "monthly";
+
+    grid-template-rows: 210px 1fr 1fr;
+    }
 }
 
-/* Mobile phones */
-@media screen and (max-width: 400px) {
-    
-}
 
 /* Very small screens */
 @media screen and (max-width: 320px) {
@@ -386,7 +513,7 @@ aside .table-div table tr:nth-child(odd) {
 
         <div>
             <p>00/00/00</p>
-            <p>00:00 AM</p>
+            <p class="time">00:00 AM</p>
         </div>
     </nav>
 
