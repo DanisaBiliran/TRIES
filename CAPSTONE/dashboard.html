@@ -501,6 +501,15 @@
             }
         }
     </style>
+
+    <style>
+        /* Active room styling */ /* NEW SECTION */
+        .active-room {
+            border: 2px solid var(--second) !important;
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -514,30 +523,30 @@
 
     <main>
         <div class="rooms-div">
-            <div class="room1 rooms">
+            <div class="room1 rooms" onclick="selectRoom(1, this)">
                 <i class="fa-solid fa-bell"></i>
 
                 <div class="texts">
                     <h2>Room 1</h2>
-                    <p onclick="renameRoom(this)">rename</p>
+                    <p>rename</p>
                 </div>
             </div>
 
-            <div class="room2 rooms">
+            <div class="room2 rooms" onclick="selectRoom(2, this)">
                 <i class="fa-solid fa-bell"></i>
 
                 <div class="texts">
                     <h2>Room 2</h2>
-                    <p onclick="renameRoom(this)">rename</p>
+                    <p>rename</p>
                 </div>
             </div>
 
-            <div class="room3 rooms">
+            <div class="room3 rooms" onclick="selectRoom(3, this)">
                 <i class="fa-solid fa-bell"></i>
 
                 <div class="texts">
                     <h2>Room 3</h2>
-                    <p onclick="renameRoom(this)">rename</p>
+                    <p>rename</p>
                 </div>
             </div>
         </div>
@@ -581,19 +590,106 @@
     </aside>
 
     <script>
-        function renameRoom(renameElement) {
-            // get room name
-            const roomNameElement = renameElement.previousElementSibling;
-            const currentName = roomNameElement.textContent;
+    // Room data storage
+    const roomData = {
+        1: {
+            name: "Room 1",
+            history: [
+                { action: "Alarm reset", date: "12/15/24", time: "02:30 PM" },
+                { action: "Alarm detected", date: "12/15/24", time: "02:15 PM" },
+                { action: "System check", date: "12/15/24", time: "01:00 PM" }
+            ]
+        },
+        2: {
+            name: "Room 2", 
+            history: [
+                { action: "Alarm reset", date: "12/14/24", time: "09:45 AM" },
+                { action: "Alarm detected", date: "12/14/24", time: "09:30 AM" },
+                { action: "Maintenance", date: "12/14/24", time: "08:00 AM" }
+            ]
+        },
+        3: {
+            name: "Room 3",
+            history: [
+                { action: "System online", date: "12/13/24", time: "06:00 PM" },
+                { action: "Alarm reset", date: "12/13/24", time: "05:45 PM" },
+                { action: "Alarm detected", date: "12/13/24", time: "05:30 PM" }
+            ]
+        }
+    };
+
+    let currentSelectedRoom = 1;
+
+    // Initialize with Room 1 selected on page load
+    window.onload = function() {
+        selectRoom(1, document.querySelector('.room1 .texts'));
+    };
+
+    function selectRoom(roomNumber, textsElement) {
+        // Update current selected room
+        currentSelectedRoom = roomNumber;
+        
+        // Remove active class from all rooms
+        document.querySelectorAll('.rooms').forEach(room => {
+            room.classList.remove('active-room');
+        });
+        
+        // Add active class to selected room
+        textsElement.closest('.rooms').classList.add('active-room');
+        
+        // Update aside header with room name
+        const roomName = roomData[roomNumber].name;
+        document.querySelector('aside header h2').textContent = roomName;
+        
+        // Update history table
+        updateHistoryTable(roomNumber);
+    }
+
+    function updateHistoryTable(roomNumber) {
+        const tableBody = document.querySelector('aside table');
+        const history = roomData[roomNumber].history;
+        
+        // Clear existing rows (keep header)
+        while (tableBody.rows.length > 1) {
+            tableBody.deleteRow(1);
+        }
+        
+        // Add new rows
+        history.forEach(entry => {
+            const row = tableBody.insertRow();
+            row.insertCell(0).textContent = entry.action;
+            row.insertCell(1).textContent = entry.date;
+            row.insertCell(2).textContent = entry.time;
+        });
+    }
+
+    function renameRoom(renameElement, event) {
+        // Prevent the room selection when clicking rename
+        event.stopPropagation();
+        
+        // Get the h2 element (room name) that is the sibling of the clicked "rename" element
+        const roomNameElement = renameElement.previousElementSibling;
+        const currentName = roomNameElement.textContent;
+        
+        // Prompt user for new room name
+        const newName = prompt(`Enter new name for ${currentName}:`, currentName);
+        
+        // If user didn't cancel and entered a name, update it
+        if (newName !== null && newName.trim() !== '') {
+            const trimmedName = newName.trim();
+            roomNameElement.textContent = trimmedName;
             
-            // Prompt user for new room name
-            const newName = prompt(`Rename ${currentName}:`, currentName);
+            // Update room data
+            roomData[currentSelectedRoom].name = trimmedName;
             
-            // If user didn't cancel and entered a name, update it
-            if (newName !== null && newName.trim() !== '') {
-                roomNameElement.textContent = newName.trim();
+            // Update aside header if this is the currently selected room
+            const textsElement = renameElement.closest('.texts');
+            const roomDiv = textsElement.closest('.rooms');
+            if (roomDiv.classList.contains('active-room')) {
+                document.querySelector('aside header h2').textContent = trimmedName;
             }
         }
-    </script>
+    }
+</script>
 </body>
 </html>
