@@ -77,6 +77,7 @@
             gap: 5px;
 
             overflow-x: auto;
+            /* overflow-y: visible; */
         }
 
         /* ROOMS */
@@ -92,6 +93,8 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
+
+            /* overflow-y: visible; */
         }
 
         /* all rooms */
@@ -136,6 +139,25 @@
 
             border-radius: 50%;
             padding: clamp(15px, 3vw, 20px) clamp(18px, 3.5vw, 25px);
+        }
+
+        /* alert blinking */
+        @keyframes alertBlink {
+            0% {
+                background-color: var(--second);
+            }
+            50% {
+                background-color: #dc3545;
+                transform: translateX(-50%) scale(1.2);
+            }
+            100% {
+                background-color: var(--second);
+            }
+        }
+
+        /* apply blinking to alert icons */
+        .alert-active i {
+            animation: alertBlink .5s infinite;
         }
 
         /* texts */
@@ -695,7 +717,7 @@
         </div>
     </aside>
 
-    <!-- Mobile Popup -->
+    <!-- mobile overlay -->
     <div class="popup-overlay" onclick="closePopup()"></div>
     <div class="popup-aside">        
         <header>
@@ -733,7 +755,7 @@
     </div>
 
     <script>
-        // Room data storage
+        // temp room data storage
         const roomData = {
             1: {
                 name: "Room 1",
@@ -775,6 +797,9 @@
                 // On mobile, just set the current room but don't apply active styling
                 currentSelectedRoom = 1;
             }
+
+            // Update alert states on page load
+            updateAlertStates();
         };
 
         function selectRoom(roomNumber, roomElement) {
@@ -948,12 +973,43 @@
                 closePopup();
             }
         });
+
+        // Function to update alert states based on room stats
+        function updateAlertStates() {
+            const room1 = document.querySelector('.room1');
+            const room2 = document.querySelector('.room2');
+            const room3 = document.querySelector('.room3');
+
+            // Update Room 1 alert state
+            if (Room1Stat === 1) {
+                room1.classList.add('alert-active');
+            } else {
+                room1.classList.remove('alert-active');
+            }
+
+            // Update Room 2 alert state
+            if (Room2Stat === 1) {
+                room2.classList.add('alert-active');
+            } else {
+                room2.classList.remove('alert-active');
+            }
+
+            // Update Room 3 alert state
+            if (Room3Stat === 1) {
+                room3.classList.add('alert-active');
+            } else {
+                room3.classList.remove('alert-active');
+            }
+        }
     </script>
 
     <script>
-        let Room1Stat = 1;
+        let Room1Stat = 0;
         let Room2Stat = 0;
         let Room3Stat = 0;
+        
+        // update alert states of rooms
+        setInterval(updateAlertStates, 100);
     </script>
 
 </body>
