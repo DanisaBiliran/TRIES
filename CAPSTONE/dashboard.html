@@ -112,6 +112,15 @@
 
             padding: 25px;
             box-sizing: border-box;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Active rooms */
+        .active-room {
+            border: 2px solid var(--second) !important;
+            transform: scale(1.02);
+            transition: all 0.3s ease;
         }
 
         /* logo of room */
@@ -141,9 +150,13 @@
             box-sizing: border-box;
         }
 
-        main .rooms .texts h2,
-        main .rooms .texts p{
+        main .rooms .texts h2{
             margin: 0;
+        }
+
+        main .rooms .texts p{
+            width: fit-content;
+            margin: auto;
         }
 
         /* room name */
@@ -173,7 +186,8 @@
         }
 
         main .rooms .texts p:hover,
-        aside header i:hover{
+        aside header i:hover,
+        .popup-close:hover {
             opacity: 0.6;
             cursor: pointer;
             transition: .5s;
@@ -235,8 +249,39 @@
             right: 0;
         }
 
+        /* Mobile popup overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .popup-aside {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 40%;
+            max-width: 60%;
+            height: 100%;
+            background-color: var(--primary);
+            z-index: 1001;
+            padding: 0 20px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease-in-out;
+        }
+
+        .popup-aside.show {
+            right: 0;
+        }
+
         /* room num, edit button */
-        aside header{
+        aside header,
+        .popup-aside header{
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -247,20 +292,39 @@
         }
 
         /* room num */
-        aside header h2{
+        aside header h2,
+        .popup-aside header h2{
             margin: 0;
             font-size: clamp(1.2rem, 3vw, 1.5rem);
         }
 
         /* edit button */
-        aside header i {
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+        aside header i,
+        .popup-aside header i {
             opacity: .3;
+        }
+
+        aside header i,
+        .popup-aside header .popup-close{
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+        }
+
+        .popup-aside header .fa-pen{
+            font-size: clamp(.8rem, 2vw, 1rem);
+
+        }
+
+        .popup-aside header div{
+            display: flex;
+            flex-direction:row ;
+            align-items: center;
+            gap: 5px;
         }
 
         /* TABLE */
         /* div of table */
-        aside .table-div{
+        aside .table-div,
+        .popup-aside .table-div{
             width: 100%;
 
             text-align: left;
@@ -271,7 +335,8 @@
         }
 
         /* table */
-        aside .table-div table {
+        aside .table-div table,
+        .popup-aside .table-div table {
             min-width: auto;
             width: 100%;
 
@@ -282,7 +347,8 @@
         }
 
         /* "view history" */
-        aside .title{
+        aside .title,
+        .popup-aside .title{
             text-align: left;
             font-weight: 600;
             opacity: .5;
@@ -294,18 +360,21 @@
         }
 
         /* table header */
-        aside table th{
+        aside table th,
+        .popup-aside table th{
             background-color: rgba(136, 143, 167, 0.42);
             padding: 5px 10px;
             font-size: clamp(0.8rem, 1.8vw, 0.9rem);
         }
 
-        aside table td{
+        aside table td,
+        .popup-aside table td{
             padding: 5px 10px;
             font-size: clamp(0.75rem, 1.6vw, 0.85rem);
         }
 
-        aside .table-div table tr:nth-child(odd) {
+        aside .table-div table tr:nth-child(odd),
+        .popup-aside .table-div table tr:nth-child(odd) {
             background-color: rgba(136, 143, 167, 0.10);
         }
 
@@ -402,6 +471,18 @@
         @media screen and (max-width: 768px) {
             aside{
                 display: none;
+            }
+
+            .popup-overlay {
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+
+            .popup-overlay.show {
+                opacity: 1;
+                visibility: visible;
             }
 
             body{
@@ -517,17 +598,24 @@
 
             grid-template-rows: 210px 1fr 1fr;
             }
+
+            .popup-aside {
+                width: 90%;
+                padding: 0 15px;
+            }
+
+            .popup-aside .title {
+                font-size: 0.9rem;
+            }
+
+            .popup-aside table th,
+            .popup-aside table td {
+                font-size: 0.75rem;
+                padding: 8px 6px;
+            }
         }
     </style>
 
-    <style>
-        /* Active room styling */ /* NEW SECTION */
-        .active-room {
-            border: 2px solid var(--second) !important;
-            transform: scale(1.02);
-            transition: all 0.3s ease;
-        }
-    </style>
 </head>
 <body>
     <nav>
@@ -607,6 +695,43 @@
         </div>
     </aside>
 
+    <!-- Mobile Popup -->
+    <div class="popup-overlay" onclick="closePopup()"></div>
+    <div class="popup-aside">        
+        <header>
+            <div>
+                <h2>Room #</h2>
+                <i class="fa-solid fa-pen"></i>
+            </div>
+
+            <i class="fa-solid fa-times popup-close" onclick="closePopup()"></i>
+        </header>
+        
+        <p class="title">Alert History</p>
+
+        <div class="table-div">
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+
+                <tr>
+                    <td>Alarm reset</td>
+                    <td>00/00/00</td>
+                    <td>00:00 AM</td>
+                </tr>
+
+                <tr>
+                    <td>Alarm detected</td>
+                    <td>00/00/00</td>
+                    <td>00:00 AM</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <script>
         // Room data storage
         const roomData = {
@@ -615,7 +740,7 @@
                 history: [
                     { action: "Alarm reset", date: "12/15/24", time: "02:30 PM" },
                     { action: "Alarm detected", date: "12/15/24", time: "02:15 PM" },
-                    { action: "System check", date: "12/15/24", time: "01:00 PM" }
+                    { action: "Alarm reset", date: "12/15/24", time: "01:00 PM" }
                 ]
             },
             2: {
@@ -623,13 +748,13 @@
                 history: [
                     { action: "Alarm reset", date: "12/14/24", time: "09:45 AM" },
                     { action: "Alarm detected", date: "12/14/24", time: "09:30 AM" },
-                    { action: "Maintenance", date: "12/14/24", time: "08:00 AM" }
+                    { action: "Alarm reset", date: "12/14/24", time: "08:00 AM" }
                 ]
             },
             3: {
                 name: "Room 3",
                 history: [
-                    { action: "System online", date: "12/13/24", time: "06:00 PM" },
+                    { action: "Alarm detected", date: "12/13/24", time: "06:00 PM" },
                     { action: "Alarm reset", date: "12/13/24", time: "05:45 PM" },
                     { action: "Alarm detected", date: "12/13/24", time: "05:30 PM" }
                 ]
@@ -640,31 +765,47 @@
 
         // Initialize with Room 1 selected on page load
         window.onload = function() {
-            selectRoom(1, document.querySelector('.room1'));
+            // Only select room for desktop, don't show active styling on mobile
+            const aside = document.querySelector('aside');
+            const isDesktop = window.getComputedStyle(aside).display !== 'none';
+            
+            if (isDesktop) {
+                selectRoom(1, document.querySelector('.room1'));
+            } else {
+                // On mobile, just set the current room but don't apply active styling
+                currentSelectedRoom = 1;
+            }
         };
 
         function selectRoom(roomNumber, roomElement) {
             // Update current selected room
             currentSelectedRoom = roomNumber;
             
-            // Remove active class from all rooms
-            document.querySelectorAll('.rooms').forEach(room => {
-                room.classList.remove('active-room');
-            });
+            // Check if we're on mobile (when aside is hidden)
+            const aside = document.querySelector('aside');
+            const isDesktop = window.getComputedStyle(aside).display !== 'none';
             
-            // Add active class to selected room
-            roomElement.classList.add('active-room');
-            
-            // Update aside header with room name
-            const roomName = roomData[roomNumber].name;
-            document.querySelector('aside header h2').textContent = roomName;
-            
-            // Update history table
-            updateHistoryTable(roomNumber);
+            if (isDesktop) {
+                // Desktop behavior - apply active styling and update aside
+                document.querySelectorAll('.rooms').forEach(room => {
+                    room.classList.remove('active-room');
+                });
+                roomElement.classList.add('active-room');
+                
+                const roomName = roomData[roomNumber].name;
+                document.querySelector('aside header h2').textContent = roomName;
+                updateHistoryTable(roomNumber, 'aside');
+            } else {
+                // Mobile behavior - show popup but don't apply active styling until popup is shown
+                const roomName = roomData[roomNumber].name;
+                document.querySelector('.popup-aside header h2').textContent = roomName;
+                updateHistoryTable(roomNumber, '.popup-aside');
+                showPopup();
+            }
         }
 
-        function updateHistoryTable(roomNumber) {
-            const tableBody = document.querySelector('aside table');
+        function updateHistoryTable(roomNumber, container) {
+            const tableBody = document.querySelector(`${container} table`);
             const history = roomData[roomNumber].history;
             
             // Clear existing rows (keep header)
@@ -679,6 +820,55 @@
                 row.insertCell(1).textContent = entry.date;
                 row.insertCell(2).textContent = entry.time;
             });
+        }
+
+        function showPopup() {
+            const overlay = document.querySelector('.popup-overlay');
+            const popup = document.querySelector('.popup-aside');
+            
+            overlay.classList.add('show');
+            popup.classList.add('show');
+            
+            // Apply active styling to current room when popup is shown
+            const currentRoom = document.querySelector(`.room${currentSelectedRoom}`);
+            if (currentRoom) {
+                document.querySelectorAll('.rooms').forEach(room => {
+                    room.classList.remove('active-room');
+                });
+                currentRoom.classList.add('active-room');
+            }
+            
+            // Prevent body scrolling when popup is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            const overlay = document.querySelector('.popup-overlay');
+            const popup = document.querySelector('.popup-aside');
+            
+            overlay.classList.remove('show');
+            popup.classList.remove('show');
+            
+            // Remove active styling when popup is closed
+            document.querySelectorAll('.rooms').forEach(room => {
+                room.classList.remove('active-room');
+            });
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        function ensureActiveRoomState() {
+            // Make sure the currently selected room has the active-room class
+            const activeRoom = document.querySelector(`.room${currentSelectedRoom}`);
+            if (activeRoom && !activeRoom.classList.contains('active-room')) {
+                // Remove active class from all rooms first
+                document.querySelectorAll('.rooms').forEach(room => {
+                    room.classList.remove('active-room');
+                });
+                // Add active class to current room
+                activeRoom.classList.add('active-room');
+            }
         }
 
         function renameRoom(renameElement, event) {
@@ -714,10 +904,57 @@
                 
                 // Update aside header if this is the currently selected room
                 if (roomDiv.classList.contains('active-room')) {
-                    document.querySelector('aside header h2').textContent = trimmedName;
+                    // Update both desktop and mobile headers
+                    const desktopHeader = document.querySelector('aside header h2');
+                    const mobileHeader = document.querySelector('.popup-aside header h2');
+                    
+                    if (desktopHeader) desktopHeader.textContent = trimmedName;
+                    if (mobileHeader) mobileHeader.textContent = trimmedName;
                 }
             }
         }
+
+        // Handle window resize to close popup if switching to desktop
+        window.addEventListener('resize', function() {
+            const aside = document.querySelector('aside');
+            const isDesktop = window.getComputedStyle(aside).display !== 'none';
+            
+            if (isDesktop) {
+                closePopup();
+                // Update desktop aside with current selected room and apply active styling
+                const roomName = roomData[currentSelectedRoom].name;
+                document.querySelector('aside header h2').textContent = roomName;
+                updateHistoryTable(currentSelectedRoom, 'aside');
+                
+                // Apply active styling for desktop
+                const currentRoom = document.querySelector(`.room${currentSelectedRoom}`);
+                if (currentRoom) {
+                    document.querySelectorAll('.rooms').forEach(room => {
+                        room.classList.remove('active-room');
+                    });
+                    currentRoom.classList.add('active-room');
+                }
+            } else {
+                // When switching to mobile, remove active styling
+                document.querySelectorAll('.rooms').forEach(room => {
+                    room.classList.remove('active-room');
+                });
+            }
+        });
+
+        // Close popup on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePopup();
+            }
+        });
     </script>
+
+    <script>
+        let Room1Stat = 1;
+        let Room2Stat = 0;
+        let Room3Stat = 0;
+    </script>
+
 </body>
 </html>
